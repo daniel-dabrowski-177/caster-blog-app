@@ -1,0 +1,14 @@
+<form (submit)="onSubmit()">
+  <label for="title">Tytuł:</label>
+  <input type="text" id="title" [(ngModel)]="postTitle" name="title" required />
+
+  <label for="content">Treść:</label>
+  <textarea
+    id="content"
+    [(ngModel)]="postContent"
+    name="content"
+    required
+  ></textarea>
+
+  <button type="submit">Dodaj post</button>
+</form>
