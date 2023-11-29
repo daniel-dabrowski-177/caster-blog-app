@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { PostService } from '../../services/post.service';
 
 @Component({
@@ -10,7 +11,7 @@ export class AddPostComponent {
   postTitle: string = '';
   postContent: string = '';
 
-  constructor(private postService: PostService) {}
+  constructor(private postService: PostService, private router: Router) {}
 
   onSubmit() {
     this.postService.addPost({
@@ -20,5 +21,7 @@ export class AddPostComponent {
 
     this.postTitle = '';
     this.postContent = '';
+
+    this.router.navigateByUrl('/');
   }
 }
