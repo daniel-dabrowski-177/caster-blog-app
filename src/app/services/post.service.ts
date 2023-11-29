@@ -1,4 +1,3 @@
-// post.service.ts
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
@@ -9,12 +8,18 @@ export class PostService {
   private posts: any[] = [];
   private postsSubject = new BehaviorSubject<any[]>(this.posts);
 
+  constructor() {}
+
   getPosts() {
-    return this.postsSubject.asObservable();
+    return this.posts;
   }
 
-  addPost(post: any) {
+  getPostsSubject() {
+    return this.postsSubject;
+  }
+
+  addPost(post: any): void {
     this.posts.push(post);
-    this.postsSubject.next(this.posts);
+    this.postsSubject.next([...this.posts]);
   }
 }
