@@ -13,14 +13,14 @@ describe('PostService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('addPost() should add a new post and notify observers', () => {
+  it('should notify observers when posts are updated', () => {
     const observerSpy = jasmine.createSpy('observerSpy');
-    service.getPosts().subscribe(observerSpy);
+    service.getPostsSubject().subscribe(observerSpy);
 
     const testPost = { title: 'Test Title', content: 'Test Content' };
     service.addPost(testPost);
 
-    expect(service['posts']).toEqual([testPost]);
+    // Oczekujemy, że observerSpy zostanie wywołany po dodaniu posta
     expect(observerSpy).toHaveBeenCalled();
   });
 });

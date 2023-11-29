@@ -15,7 +15,7 @@ export class PostService {
   }
 
   getPostsSubject() {
-    return this.postsSubject;
+    return this.postsSubject.asObservable();
   }
 
   addPost(post: any): void {
