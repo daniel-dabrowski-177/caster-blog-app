@@ -22,4 +22,11 @@ export class PostService {
     this.posts.push(post);
     this.postsSubject.next([...this.posts]);
   }
+
+  deletePost(index: number): void {
+    if (index >= 0 && index < this.posts.length) {
+      this.posts.splice(index, 1);
+      this.postsSubject.next([...this.posts]); // Notify observers about the change
+    }
+  }
 }
