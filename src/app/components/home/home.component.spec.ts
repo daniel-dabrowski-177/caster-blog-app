@@ -1,6 +1,8 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { HomeComponent } from './home.component';
 import { PostService } from '../../services/post.service';
+import { FormsModule } from '@angular/forms';
+import { By } from '@angular/platform-browser';
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
@@ -10,6 +12,7 @@ describe('HomeComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [HomeComponent],
+      imports: [FormsModule],
       providers: [PostService],
     });
 
@@ -43,5 +46,39 @@ describe('HomeComponent', () => {
       expect(titleElement.textContent).toContain(post.title);
       expect(contentElement.textContent).toContain(post.content);
     });
+  });
+
+  it('should remove the corresponding post when delete button is clicked', () => {
+    // Arrange
+    const testPosts = [
+      { title: 'Test Title 1', content: 'Test Content 1' },
+      { title: 'Test Title 2', content: 'Test Content 2' },
+      { title: 'Test Title 3', content: 'Test Content 3' },
+    ];
+
+    spyOn(postService, 'getPosts').and.returnValue([...testPosts]);
+
+    fixture.detectChanges();
+
+    const deleteButtons =
+      fixture.nativeElement.querySelectorAll('.delete-button');
+    const postCountBeforeDeletion = component.posts.length;
+
+    // Act
+    deleteButtons[0].click(); // Assume the delete button for the first post is clicked
+
+    // Assert
+    fixture.detectChanges(); // Refresh the component after clicking delete button
+    expect(component.posts.length).toBe(postCountBeforeDeletion);
+
+    // Repeat for the second post
+    deleteButtons[1].click();
+    fixture.detectChanges();
+    expect(component.posts.length).toBe(postCountBeforeDeletion);
+
+    // Repeat for the third post
+    deleteButtons[2].click();
+    fixture.detectChanges();
+    expect(component.posts.length).toBe(postCountBeforeDeletion);
   });
 });
