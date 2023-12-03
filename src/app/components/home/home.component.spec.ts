@@ -60,25 +60,30 @@ describe('HomeComponent', () => {
 
     fixture.detectChanges();
 
-    const deleteButtons =
-      fixture.nativeElement.querySelectorAll('.delete-button');
-    const postCountBeforeDeletion = component.posts.length;
+    // Act and Assert
+    testPosts.forEach((_, index) => {
+      const postCountBeforeDeletion = component.posts.length;
+      fixture.nativeElement.querySelectorAll('.delete-button')[index].click();
+      fixture.detectChanges(); // Refresh the component after clicking delete button
+      expect(component.posts.length).toBe(postCountBeforeDeletion);
+    });
+  });
 
-    // Act
-    deleteButtons[0].click(); // Assume the delete button for the first post is clicked
+  it('should enter edit mode when Edit button is clicked', () => {
+    // Arrange
+    const testPosts = [
+      { title: 'Test Title 1', content: 'Test Content 1' },
+      { title: 'Test Title 2', content: 'Test Content 2' },
+    ];
+    spyOn(postService, 'getPosts').and.returnValue([...testPosts]);
 
-    // Assert
-    fixture.detectChanges(); // Refresh the component after clicking delete button
-    expect(component.posts.length).toBe(postCountBeforeDeletion);
-
-    // Repeat for the second post
-    deleteButtons[1].click();
     fixture.detectChanges();
-    expect(component.posts.length).toBe(postCountBeforeDeletion);
 
-    // Repeat for the third post
-    deleteButtons[2].click();
-    fixture.detectChanges();
-    expect(component.posts.length).toBe(postCountBeforeDeletion);
+    // Act and Assert
+    fixture.nativeElement.querySelector('.edit-button').click();
+    expect(component.editMode).toBe(true);
+    expect(component.editedPostIndex).toBe(0);
+    expect(component.editedPostTitle).toBe(testPosts[0].title);
+    expect(component.editedPostContent).toBe(testPosts[0].content);
   });
 });

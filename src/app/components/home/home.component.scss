@@ -65,3 +65,9 @@ body {
 .add-post-button:hover {
   background-color: #45a049;
 }
+
+.input-container {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
