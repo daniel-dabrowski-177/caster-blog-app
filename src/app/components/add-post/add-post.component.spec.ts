@@ -48,7 +48,6 @@ describe('AddPostComponent', () => {
     component.onSubmit();
 
     expect(postService.getPosts().length).toBe(1);
-
     expect(navigateSpy).toHaveBeenCalledWith('/');
   });
 });

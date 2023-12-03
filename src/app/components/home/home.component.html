@@ -3,6 +3,29 @@
     <h2 class="post-title">{{ post.title }}</h2>
     <p class="post-content">{{ post.content }}</p>
     <button class="delete-button" (click)="deletePost(i)">X</button>
+    <button class="edit-button" *ngIf="!editMode" (click)="enterEditMode(i)">
+      Edit
+    </button>
+    <div *ngIf="editMode && editedPostIndex === i" class="input-container">
+      <input
+        [(ngModel)]="editedPostTitle"
+        placeholder="Enter updated title"
+        required
+      />
+      <textarea
+        [(ngModel)]="editedPostContent"
+        placeholder="Enter updated content"
+        required
+      ></textarea>
+      <button
+        class="update-button"
+        (click)="updatePost()"
+        [disabled]="!editedPostTitle.trim() || !editedPostContent.trim()"
+      >
+        Update
+      </button>
+      <button class="cancel-button" (click)="exitEditMode()">Cancel</button>
+    </div>
   </div>
 </div>
 <a routerLink="/add-post" class="add-post-button">Dodaj nowy post</a>
