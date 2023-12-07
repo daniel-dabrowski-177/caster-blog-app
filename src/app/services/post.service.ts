@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { Post } from 'src/app/models/post.model';
 
 @Injectable({
   providedIn: 'root',
@@ -7,11 +10,12 @@ import { BehaviorSubject } from 'rxjs';
 export class PostService {
   private posts: any[] = [];
   private postsSubject = new BehaviorSubject<any[]>(this.posts);
+  private apiUrl = 'http://localhost:3000';
 
-  constructor() {}
+  constructor(private http: HttpClient) {}
 
-  getPosts() {
-    return this.posts;
+  getPosts(): Observable<Post[]> {
+    return this.http.get<Post[]>(`${this.apiUrl}/posts`);
   }
 
   getPostsSubject() {

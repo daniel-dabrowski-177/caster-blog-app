@@ -1,11 +1,10 @@
-import mongoose from "mongoose"; // 1.Import
+import mongoose from "mongoose";
 
 const postSchema = new mongoose.Schema({
-  // 2.Create Schema
   title: String,
   content: String,
 });
 
-const Post = mongoose.model("Post", postSchema); // 3.Call it Post and attatch to schema
+const Post = mongoose.model("Post", postSchema);
 
-export default Post; // 4.Export
+export default Post;
