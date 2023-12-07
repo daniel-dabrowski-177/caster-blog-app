@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PostService } from '../../services/post.service';
+import { Post } from 'src/app/models/post.model';
 
 @Component({
   selector: 'app-home',
@@ -7,7 +8,6 @@ import { PostService } from '../../services/post.service';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
-  posts: { title: string; content: string }[] = [];
   editMode: boolean = false;
   editedPostIndex: number | null = null;
   editedPostTitle: string = '';
@@ -15,15 +15,26 @@ export class HomeComponent implements OnInit {
   postTitle: string = '';
   postContent: string = '';
 
+  // posts: { title: string; content: string }[] = [];
+  posts: Post[] = [];
+
   constructor(private postService: PostService) {}
 
-  ngOnInit() {
-    this.posts = this.postService.getPosts();
-    this.loadPosts();
+  // ngOnInit() {
+  //   this.posts = this.postService.getPosts();
+  //   this.loadPosts();
+  // }
+
+  ngOnInit(): void {
+    this.postService.getPosts().subscribe((posts) => {
+      this.posts = posts;
+    });
   }
 
   loadPosts() {
-    this.posts = this.postService.getPosts();
+    this.postService.getPosts().subscribe((data) => {
+      this.posts = data;
+    });
   }
 
   deletePost(index: number) {
