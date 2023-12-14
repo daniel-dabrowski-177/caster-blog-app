@@ -51,7 +51,7 @@ body {
 }
 
 .add-post-button {
-  background-color: #4caf50;
+  background-color: #4c56af;
   color: #fff;
   border: none;
   padding: 10px 15px;
@@ -60,10 +60,11 @@ body {
   cursor: pointer;
   margin-top: 40px;
   transition: background-color 0.3s ease;
+  font-weight: bold;
 }
 
 .add-post-button:hover {
-  background-color: #45a049;
+  background-color: #3f4896;
 }
 
 .input-container {
