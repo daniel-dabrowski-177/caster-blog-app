@@ -15,15 +15,9 @@ export class HomeComponent implements OnInit {
   postTitle: string = '';
   postContent: string = '';
 
-  // posts: { title: string; content: string }[] = [];
   posts: Post[] = [];
 
   constructor(private postService: PostService) {}
-
-  // ngOnInit() {
-  //   this.posts = this.postService.getPosts();
-  //   this.loadPosts();
-  // }
 
   ngOnInit(): void {
     this.postService.getPosts().subscribe((posts) => {
@@ -39,7 +33,7 @@ export class HomeComponent implements OnInit {
 
   deletePost(index: number) {
     this.postService.deletePost(index);
-    this.loadPosts(); // Refresh the posts after deletion
+    this.loadPosts();
   }
 
   enterEditMode(index: number) {
@@ -55,13 +49,11 @@ export class HomeComponent implements OnInit {
       this.editedPostTitle.trim() !== '' &&
       this.editedPostContent.trim() !== ''
     ) {
-      // Aktualizacja posta
       const updatedPost = {
         title: this.editedPostTitle,
         content: this.editedPostContent,
       };
 
-      // Sprawdź, czy wartość nie jest równa null
       if (this.editedPostIndex !== null) {
         this.postService.updatePost(this.editedPostIndex, updatedPost);
         this.exitEditMode();

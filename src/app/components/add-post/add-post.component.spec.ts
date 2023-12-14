@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing'; // Dodajmy RouterTestingModule
+import { RouterTestingModule } from '@angular/router/testing';
 import { FormsModule } from '@angular/forms';
 import { AddPostComponent } from './add-post.component';
 import { PostService } from '../../services/post.service';
@@ -14,7 +14,7 @@ describe('AddPostComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [AddPostComponent],
-      imports: [FormsModule, RouterTestingModule], // Dodaj RouterTestingModule
+      imports: [FormsModule, RouterTestingModule],
       providers: [PostService],
     });
 
