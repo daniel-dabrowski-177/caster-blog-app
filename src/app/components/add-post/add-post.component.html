@@ -1,14 +1,13 @@
 <form (submit)="onSubmit()">
-  <label for="title">Tytuł:</label>
-  <input type="text" id="title" [(ngModel)]="postTitle" name="title" required />
+  <label for="title">Title:</label>
+  <input [(ngModel)]="newPost.title" id="title" name="title" />
 
-  <label for="content">Treść:</label>
+  <label for="content">Content:</label>
   <textarea
+    [(ngModel)]="newPost.content"
     id="content"
-    [(ngModel)]="postContent"
     name="content"
-    required
   ></textarea>
 
-  <button type="submit">Dodaj post</button>
+  <button type="submit">Create Post</button>
 </form>

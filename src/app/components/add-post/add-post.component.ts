@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { PostService } from '../../services/post.service';
+import { Post } from 'src/app/models/post.model';
 
 @Component({
   selector: 'app-add-post',
@@ -10,18 +11,24 @@ import { PostService } from '../../services/post.service';
 export class AddPostComponent {
   postTitle: string = '';
   postContent: string = '';
+  newPost: Post = { title: '', content: '' };
 
   constructor(private postService: PostService, private router: Router) {}
 
-  onSubmit() {
-    this.postService.addPost({
-      title: this.postTitle,
-      content: this.postContent,
+  createPost() {
+    this.postService.createPost(this.newPost).subscribe((createdPost) => {
+      console.log('Post created:', createdPost);
     });
+  }
 
-    this.postTitle = '';
-    this.postContent = '';
+  onSubmit() {
+    this.postService.createPost(this.newPost).subscribe((createdPost) => {
+      console.log('Post created:', createdPost);
 
-    this.router.navigateByUrl('/');
+      this.postService.addPost(createdPost);
+
+      this.newPost = { title: '', content: '' };
+      this.router.navigateByUrl('/');
+    });
   }
 }

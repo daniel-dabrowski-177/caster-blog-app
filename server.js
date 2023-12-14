@@ -14,9 +14,8 @@ app.use(express.json());
 
 mongoose.connect(process.env.MONGO_URL);
 
-app.use("/posts", postsRouter);
-app.use("/api", postsRouter); // Użyj router pod ścieżką '/api'
+app.use("/api/posts", postsRouter);
 
 app.listen(port || 3000, () => {
-  console.log(`Serwer działa na http://localhost:${port}`);
+  console.log(`Server works at http://localhost:${port}`);
 });
