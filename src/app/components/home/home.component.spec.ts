@@ -2,6 +2,9 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { HomeComponent } from './home.component';
 import { PostService } from '../../services/post.service';
 import { FormsModule } from '@angular/forms';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { of } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
@@ -11,7 +14,7 @@ describe('HomeComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [HomeComponent],
-      imports: [FormsModule],
+      imports: [FormsModule, HttpClientTestingModule],
       providers: [PostService],
     });
 
@@ -20,7 +23,7 @@ describe('HomeComponent', () => {
     postService = TestBed.inject(PostService);
   });
 
-  it('should create', () => {
+  it('should create a component', () => {
     expect(component).toBeTruthy();
   });
 
@@ -30,7 +33,7 @@ describe('HomeComponent', () => {
       { title: 'Test Title 2', content: 'Test Content 2' },
     ];
 
-    spyOn(postService, 'getPosts').and.returnValue(testPosts);
+    spyOn(postService, 'getPosts').and.returnValue(of(testPosts)); // Użyj operatora `of` tutaj
 
     fixture.detectChanges();
 
@@ -55,7 +58,7 @@ describe('HomeComponent', () => {
       { title: 'Test Title 3', content: 'Test Content 3' },
     ];
 
-    spyOn(postService, 'getPosts').and.returnValue([...testPosts]);
+    spyOn(postService, 'getPosts').and.returnValue(of(testPosts));
 
     fixture.detectChanges();
 
@@ -74,7 +77,7 @@ describe('HomeComponent', () => {
       { title: 'Test Title 1', content: 'Test Content 1' },
       { title: 'Test Title 2', content: 'Test Content 2' },
     ];
-    spyOn(postService, 'getPosts').and.returnValue([...testPosts]);
+    spyOn(postService, 'getPosts').and.returnValue(of(testPosts));
 
     fixture.detectChanges();
 
