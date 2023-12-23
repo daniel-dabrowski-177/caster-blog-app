@@ -18,30 +18,15 @@ export class PostService {
     return this.http.get<Post[]>(`${this.apiUrl}/api/posts/`);
   }
 
-  createPost(post: Post): Observable<Post> {
-    return this.http.post<Post>(`${this.apiUrl}/api/posts/`, post);
+  addPost(post: Post): Observable<any> {
+    return this.http.post(`${this.apiUrl}/api/posts/`, post);
   }
 
-  getPostsSubject() {
-    return this.postsSubject.asObservable();
+  deletePost(postId: string): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/api/posts/${postId}`);
   }
 
-  addPost(post: any): void {
-    this.posts.push(post);
-    this.postsSubject.next([...this.posts]);
-  }
-
-  deletePost(index: number): void {
-    if (index >= 0 && index < this.posts.length) {
-      this.posts.splice(index, 1);
-      this.postsSubject.next([...this.posts]);
-    }
-  }
-
-  updatePost(index: number, updatedPost: any): void {
-    if (index >= 0 && index < this.posts.length) {
-      this.posts[index] = updatedPost;
-      this.postsSubject.next([...this.posts]);
-    }
+  editPost(post: Post): Observable<any> {
+    return this.http.put(`${this.apiUrl}/api/posts/${post._id}`, post);
   }
 }

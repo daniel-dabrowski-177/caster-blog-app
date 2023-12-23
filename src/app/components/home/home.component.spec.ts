@@ -1,10 +1,9 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HomeComponent } from './home.component';
 import { PostService } from '../../services/post.service';
 import { FormsModule } from '@angular/forms';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { of } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
@@ -50,42 +49,66 @@ describe('HomeComponent', () => {
     });
   });
 
-  it('should remove the corresponding post when delete button is clicked', () => {
+  it('should set edit mode to true when edit button is clicked', () => {
     // Arrange
     const testPosts = [
       { title: 'Test Title 1', content: 'Test Content 1' },
       { title: 'Test Title 2', content: 'Test Content 2' },
-      { title: 'Test Title 3', content: 'Test Content 3' },
     ];
 
     spyOn(postService, 'getPosts').and.returnValue(of(testPosts));
 
     fixture.detectChanges();
 
-    // Act and Assert
-    testPosts.forEach((_, index) => {
-      const postCountBeforeDeletion = component.posts.length;
-      fixture.nativeElement.querySelectorAll('.delete-button')[index].click();
-      fixture.detectChanges(); // Refresh the component after clicking delete button
-      expect(component.posts.length).toBe(postCountBeforeDeletion);
-    });
+    // Act
+    fixture.nativeElement.querySelector('.edit-button').click();
+    fixture.detectChanges();
+
+    // Assert
+    expect(component.editMode.some((mode) => mode === true)).toBeTrue();
   });
 
-  it('should enter edit mode when Edit button is clicked', () => {
+  it('should update editFormData when edit button is clicked', () => {
     // Arrange
     const testPosts = [
       { title: 'Test Title 1', content: 'Test Content 1' },
       { title: 'Test Title 2', content: 'Test Content 2' },
     ];
+
     spyOn(postService, 'getPosts').and.returnValue(of(testPosts));
 
     fixture.detectChanges();
 
-    // Act and Assert
-    fixture.nativeElement.querySelector('.edit-button').click();
-    expect(component.editMode).toBe(true);
-    expect(component.editedPostIndex).toBe(0);
-    expect(component.editedPostTitle).toBe(testPosts[0].title);
-    expect(component.editedPostContent).toBe(testPosts[0].content);
+    // Act
+    const index = 0; // choose an index
+    fixture.nativeElement.querySelectorAll('.edit-button')[index].click();
+    fixture.detectChanges();
+
+    // Assert
+    expect(component.editFormData.title).toBe(testPosts[index].title);
+    expect(component.editFormData.content).toBe(testPosts[index].content);
+  });
+
+  it('should remove the post when delete button is clicked', () => {
+    // Arrange
+    const testPosts = [
+      { _id: '1', title: 'Test Title 1', content: 'Test Content 1' },
+      { _id: '2', title: 'Test Title 2', content: 'Test Content 2' },
+    ];
+
+    spyOn(postService, 'getPosts').and.returnValue(of(testPosts));
+    spyOn(postService, 'deletePost').and.returnValue(of(null)); // Mock the deletePost function
+    fixture.detectChanges();
+
+    // Act
+    const index = 0; // choose an index
+    const deleteButton =
+      fixture.nativeElement.querySelectorAll('.delete-button')[index];
+    deleteButton.click();
+    fixture.detectChanges();
+
+    // Assert
+    expect(postService.deletePost).toHaveBeenCalledWith('1'); // Adjust the ID based on your actual implementation
+    expect(component.posts.length).toBe(testPosts.length - 1);
   });
 });

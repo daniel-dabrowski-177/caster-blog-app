@@ -1,31 +1,30 @@
 <div class="posts-container">
   <div *ngFor="let post of posts; let i = index" class="post">
-    <h2 class="post-title">{{ post.title }}</h2>
-    <p class="post-content">{{ post.content }}</p>
-    <button class="delete-button" (click)="deletePost(i)">X</button>
-    <button class="edit-button" *ngIf="!editMode" (click)="enterEditMode(i)">
-      Edit
-    </button>
-    <div *ngIf="editMode && editedPostIndex === i" class="input-container">
-      <input
-        [(ngModel)]="editedPostTitle"
-        placeholder="Enter updated title"
-        required
-      />
-      <textarea
-        [(ngModel)]="editedPostContent"
-        placeholder="Enter updated content"
-        required
-      ></textarea>
-      <button
-        class="update-button"
-        (click)="updatePost()"
-        [disabled]="!editedPostTitle.trim() || !editedPostContent.trim()"
-      >
-        Update
-      </button>
-      <button class="cancel-button" (click)="exitEditMode()">Cancel</button>
+    <div class="post-header">
+      <h2 class="post-title">{{ post.title }}</h2>
+      <button class="delete-button" (click)="deletePost(post._id)">Usuń</button>
     </div>
+    <p class="post-content">{{ post.content }}</p>
+
+    <div *ngIf="editMode[i]" class="edit-section">
+      <input [(ngModel)]="editFormData.title" placeholder="Nowy tytuł" />
+      <textarea
+        [(ngModel)]="editFormData.content"
+        placeholder="Nowa treść"
+      ></textarea>
+      <div class="edit-container">
+        <button (click)="saveEdit(post, i)">Zapisz</button>
+        <button (click)="cancelEdit(i)">Anuluj</button>
+      </div>
+    </div>
+
+    <button
+      *ngIf="!editMode[i]"
+      class="edit-button"
+      (click)="editPost(post, i)"
+    >
+      Edytuj
+    </button>
   </div>
+  <a routerLink="/add-post" class="add-post-button">Dodaj nowy post</a>
 </div>
-<a routerLink="/add-post" class="add-post-button">Dodaj nowy post</a>

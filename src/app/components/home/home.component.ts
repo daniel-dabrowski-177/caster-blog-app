@@ -8,14 +8,11 @@ import { Post } from 'src/app/models/post.model';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
-  editMode: boolean = false;
-  editedPostIndex: number | null = null;
-  editedPostTitle: string = '';
-  editedPostContent: string = '';
   postTitle: string = '';
   postContent: string = '';
-
   posts: Post[] = [];
+  editFormData = { title: '', content: '' };
+  editMode: boolean[] = new Array<boolean>(this.posts.length).fill(false);
 
   constructor(private postService: PostService) {}
 
@@ -25,57 +22,47 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  loadPosts() {
-    this.postService.getPosts().subscribe((data) => {
-      this.posts = data;
+  deletePost(postId: string | undefined): void {
+    if (!postId) {
+      console.error('Invalid post ID');
+      return;
+    }
+
+    this.postService.deletePost(postId).subscribe({
+      next: () => {
+        this.posts = this.posts.filter((post) => post._id !== postId);
+      },
+      error: (error) => {
+        console.error(error);
+      },
     });
   }
 
-  deletePost(index: number) {
-    this.postService.deletePost(index);
-    this.loadPosts();
+  editPost(selectedPost: Post, index: number): void {
+    this.editFormData = {
+      title: selectedPost.title,
+      content: selectedPost.content,
+    };
+    this.editMode[index] = true;
   }
 
-  enterEditMode(index: number) {
-    const post = this.posts[index];
-    this.editMode = true;
-    this.editedPostIndex = index;
-    this.editedPostTitle = post.title;
-    this.editedPostContent = post.content;
+  saveEdit(post: Post, index: number): void {
+    const editedPost = {
+      ...post,
+      title: this.editFormData.title,
+      content: this.editFormData.content,
+    };
+
+    this.postService.editPost(editedPost).subscribe(
+      () => {
+        this.posts[index] = editedPost;
+        this.editMode[index] = false;
+      },
+      (error) => console.error(error)
+    );
   }
 
-  updatePost() {
-    if (
-      this.editedPostTitle.trim() !== '' &&
-      this.editedPostContent.trim() !== ''
-    ) {
-      const updatedPost = {
-        title: this.editedPostTitle,
-        content: this.editedPostContent,
-      };
-
-      if (this.editedPostIndex !== null) {
-        this.postService.updatePost(this.editedPostIndex, updatedPost);
-        this.exitEditMode();
-      }
-    }
-  }
-
-  exitEditMode() {
-    this.editMode = false;
-    this.editedPostIndex = null;
-    this.editedPostTitle = '';
-    this.editedPostContent = '';
-    this.loadPosts();
-  }
-
-  addPost() {
-    if (this.postTitle.trim() !== '' && this.postContent.trim() !== '') {
-      const newPost = { title: this.postTitle, content: this.postContent };
-      this.postService.addPost(newPost);
-      this.loadPosts();
-      this.postTitle = '';
-      this.postContent = '';
-    }
+  cancelEdit(index: number): void {
+    this.editMode[index] = false;
   }
 }

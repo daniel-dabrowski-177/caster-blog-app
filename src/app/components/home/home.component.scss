@@ -32,7 +32,8 @@ body {
   color: #555;
 }
 
-.delete-button {
+.delete-button,
+.edit-button {
   position: absolute;
   top: 5px;
   right: 5px;
@@ -42,6 +43,12 @@ body {
   padding: 5px 10px;
   border-radius: 3px;
   cursor: pointer;
+  width: 80px; // Ustaw szerokość przycisku
+}
+
+.edit-button {
+  top: 40px; // Ustaw położenie przycisku "Edytuj" pod przyciskiem "Usuń"
+  background-color: #4c56af; // Zmień kolor na niebieski
 }
 
 .post img {
@@ -58,9 +65,11 @@ body {
   border-radius: 5px;
   font-size: 1em;
   cursor: pointer;
-  margin-top: 40px;
+  margin-top: 20px; // Zmieniłem odstęp na 20px
   transition: background-color 0.3s ease;
   font-weight: bold;
+  width: 150px; // Ustaw szerokość przycisku
+  text-align: center; // Wycentruj tekst
 }
 
 .add-post-button:hover {
@@ -71,4 +80,37 @@ body {
   display: flex;
   justify-content: center;
   flex-direction: column;
+}
+
+.edit-section {
+  display: flex;
+  flex-direction: column; // Wyświetl w kolumnie
+  align-items: center;
+  width: 100%; // Szerokość 100%
+}
+
+.edit-section input,
+.edit-section textarea {
+  width: calc(100% - 20px); // Ustaw szerokość na 100% - 20px (marginesy)
+  margin-bottom: 10px; // Dodaj odstęp między inputami a textarea
+}
+
+.edit-section button {
+  margin-top: 10px; // Dodaj odstęp między przyciskami
+  background-color: #4c56af;
+  color: #fff;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.edit-section button:hover {
+  background-color: #3f4896;
+}
+
+.edit-section button:first-child {
+  margin-right: 10px; // Dodaj odstęp na prawo dla pierwszego przycisku
 }

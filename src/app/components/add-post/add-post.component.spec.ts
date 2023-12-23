@@ -28,17 +28,4 @@ describe('AddPostComponent', () => {
   it('should create a component', () => {
     expect(component).toBeTruthy();
   });
-
-  it('should initialize postTitle and postContent to empty strings', () => {
-    expect(component.postTitle).toBe('');
-    expect(component.postContent).toBe('');
-  });
-
-  it('should call onSubmit() when the form is submitted', () => {
-    spyOn(component, 'onSubmit');
-    const form = fixture.nativeElement.querySelector('form');
-    form.dispatchEvent(new Event('submit'));
-    fixture.detectChanges();
-    expect(component.onSubmit).toHaveBeenCalled();
-  });
 });

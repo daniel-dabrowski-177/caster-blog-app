@@ -9,26 +9,18 @@ import { Post } from 'src/app/models/post.model';
   styleUrls: ['./add-post.component.scss'],
 })
 export class AddPostComponent {
-  postTitle: string = '';
-  postContent: string = '';
   newPost: Post = { title: '', content: '' };
 
   constructor(private postService: PostService, private router: Router) {}
 
-  createPost() {
-    this.postService.createPost(this.newPost).subscribe((createdPost) => {
-      console.log('Post created:', createdPost);
-    });
-  }
+  addPost(): void {
+    if (!this.newPost.title || !this.newPost.content) {
+      return;
+    }
 
-  onSubmit() {
-    this.postService.createPost(this.newPost).subscribe((createdPost) => {
-      console.log('Post created:', createdPost);
-
-      this.postService.addPost(createdPost);
-
-      this.newPost = { title: '', content: '' };
-      this.router.navigateByUrl('/');
-    });
+    this.postService.addPost(this.newPost).subscribe(
+      () => this.router.navigate(['/']),
+      (error) => console.error(error)
+    );
   }
 }
