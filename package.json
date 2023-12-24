@@ -5,10 +5,9 @@
   "scripts": {
     "ng": "ng",
     "start": "concurrently \"npm run server\" \"npm run client\"",
-    "server": "nodemon server.js",
+    "server": "node server.js",
     "client": "ng serve",
-    "oldBuild": "ng build",
-    "build": "concurrently \"npm run server\" \"npm run oldBuild\"",
+    "build": "concurrently \"ng build\" \"npm run server\"",
     "watch": "ng build --watch --configuration development",
     "jasmine": "jasmine",
     "test": "ng test",
