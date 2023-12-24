@@ -10,7 +10,7 @@ import { Post } from 'src/app/models/post.model';
 export class PostService {
   private posts: any[] = [];
   private postsSubject = new BehaviorSubject<any[]>(this.posts);
-  private apiUrl = 'https://caster-angular-blog-app-api.onrender.com/api/';
+  private apiUrl = 'https://caster-angular-blog-app-api.onrender.com';
 
   constructor(private http: HttpClient) {}
 
