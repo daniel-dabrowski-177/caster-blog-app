@@ -8,7 +8,7 @@
     "server": "nodemon server.js",
     "client": "ng serve",
     "oldBuild": "ng build",
-    "build": "concurrently \"npm run server\" \"ng build\"",
+    "build": "concurrently \"npm run server\" \"npm run oldBuild\"",
     "watch": "ng build --watch --configuration development",
     "jasmine": "jasmine",
     "test": "ng test",
