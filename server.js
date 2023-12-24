@@ -11,12 +11,6 @@ app.use(cors());
 dotenv.config();
 app.use(express.json());
 
-app.use(express.static(path.join(__dirname, "/caster-blog-app/build")));
-
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "/caster-blog-app/build", "index.html"));
-});
-
 mongoose.connect(process.env.MONGO_URL);
 
 app.use("/api/posts", postsRouter);
