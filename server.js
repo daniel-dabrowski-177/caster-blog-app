@@ -6,16 +6,23 @@ import dotenv from "dotenv";
 import postsRouter from "./src/app/routes/posts.route.js";
 
 const app = express();
-const port = 3000;
 
 app.use(cors());
 dotenv.config();
 app.use(express.json());
 
+app.use(express.static(path.join(__dirname, "/build")));
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "/build", "index.html"));
+});
+
 mongoose.connect(process.env.MONGO_URL);
 
 app.use("/api/posts", postsRouter);
 
-app.listen(port || 3000, () => {
-  console.log(`Server works at https://caster-angular-blog-app.netlify.app:3000`);
+app.listen(process.env.PORT || 3000, () => {
+  console.log(
+    `Server works at https://caster-angular-blog-app-api.onrender.com`
+  );
 });

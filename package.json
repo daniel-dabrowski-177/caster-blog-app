@@ -5,8 +5,8 @@
   "scripts": {
     "ng": "ng",
     "start": "concurrently \"npm run server\" \"npm run client\"",
-    "netlify": "concurrently \"npm run server\" \"npm run build\"",
-    "server": "nodemon server.js",
+    "deploy": "npm install && npm run build",
+    "server": "node server.js",
     "client": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
