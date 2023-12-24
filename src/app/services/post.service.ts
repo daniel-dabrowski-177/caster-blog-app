@@ -10,7 +10,7 @@ import { Post } from 'src/app/models/post.model';
 export class PostService {
   private posts: any[] = [];
   private postsSubject = new BehaviorSubject<any[]>(this.posts);
-  private apiUrl = 'http://localhost:3000';
+  private apiUrl = 'caster-angular-blog-app.netlify.app';
 
   constructor(private http: HttpClient) {}
 

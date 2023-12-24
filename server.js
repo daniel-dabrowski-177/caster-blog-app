@@ -17,5 +17,5 @@ mongoose.connect(process.env.MONGO_URL);
 app.use("/api/posts", postsRouter);
 
 app.listen(port || 3000, () => {
-  console.log(`Server works at http://localhost:${port}`);
+  console.log(`Server works at https://caster-angular-blog-app.netlify.app`);
 });
