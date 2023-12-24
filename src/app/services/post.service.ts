@@ -10,23 +10,23 @@ import { Post } from 'src/app/models/post.model';
 export class PostService {
   private posts: any[] = [];
   private postsSubject = new BehaviorSubject<any[]>(this.posts);
-  // private apiUrl = 'caster-angular-blog-app.netlify.app';
+  private apiUrl = 'https://caster-angular-blog-app.netlify.app';
 
   constructor(private http: HttpClient) {}
 
   getPosts(): Observable<Post[]> {
-    return this.http.get<Post[]>(`/api/posts/`);
+    return this.http.get<Post[]>(`${this.apiUrl}/api/posts/`);
   }
 
   addPost(post: Post): Observable<any> {
-    return this.http.post(`/api/posts/`, post);
+    return this.http.post(`${this.apiUrl}/api/posts/`, post);
   }
 
   deletePost(postId: string): Observable<any> {
-    return this.http.delete(`/api/posts/${postId}`);
+    return this.http.delete(`${this.apiUrl}/api/posts/${postId}`);
   }
 
   editPost(post: Post): Observable<any> {
-    return this.http.put(`/api/posts/${post._id}`, post);
+    return this.http.put(`${this.apiUrl}/api/posts/${post._id}`, post);
   }
 }
