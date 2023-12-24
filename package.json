@@ -7,7 +7,8 @@
     "start": "concurrently \"npm run server\" \"npm run client\"",
     "server": "node server.js",
     "client": "ng serve",
-    "build": "ng build && npm run server",
+    "start": "ng build && node server.js",
+    "build": "ng build"
     "watch": "ng build --watch --configuration development",
     "jasmine": "jasmine",
     "test": "ng test",
